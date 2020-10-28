@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:async';
 
-import 'package:splash_screen/screens/homepage.dart';
+import 'package:splash_screen/screens/home_screen.dart';
+import 'package:splash_screen/screens/intro_screen.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -9,15 +11,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+  Future checkFirstSeen() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool _seen = (prefs.getBool('seen') ?? false);
+
+    if (_seen) {
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new Homepage()));
+    } else {
+      await prefs.setBool('seen', true);
+      Navigator.of(context).pushReplacement(
+          new MaterialPageRoute(builder: (context) => new WelcomePage()));
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    Timer(
-        Duration(seconds: 3),
-        () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (BuildContext context) {
-              return Homepage();
-            })));
+    Timer(Duration(seconds: 3), () {
+      checkFirstSeen();
+    });
   }
 
   @override
@@ -65,6 +78,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       CircularProgressIndicator(
