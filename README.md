@@ -14,3 +14,7 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our
 [online documentation](https://flutter.dev/docs), which offers tutorials,
 samples, guidance on mobile development, and a full API reference.
+ 
+This flutter app has 3 screens , when user opens the for first time then it navigates from splash screen to 
+Intro screen then home screen and next time when user opens the app it navigates from splash screen to 
+Home screen.
