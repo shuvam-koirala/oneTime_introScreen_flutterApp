@@ -1,4 +1,4 @@
-# splash_screen
+# oneTime_introScreen
 
 A new Flutter project.
 
